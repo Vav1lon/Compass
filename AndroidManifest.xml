@@ -6,7 +6,7 @@
     <uses-sdk android:minSdkVersion="10"/>
 
     <application android:label="@string/app_name">
-        <activity android:name=".OrentationActivity"
+        <activity android:name=".MainActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape">
             <intent-filter>

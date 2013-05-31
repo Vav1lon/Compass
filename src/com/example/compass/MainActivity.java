@@ -7,11 +7,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class OrentationActivity extends Activity implements SensorEventListener {
+public class MainActivity extends Activity implements SensorEventListener {
 
-    private static final String CAMERA_FOCAL_LENGTH = "focal-length";
-    private static final String CAMERA_VERTICAL_VIEW_ANGLE = "vertical-view-angle";
-    private static final String CAMERA_HORIZONTAL_VIEW_ANGLE = "horizontal-view-angle";
 
     private float a = 0.001f;
     private float lastX;
@@ -23,7 +20,6 @@ public class OrentationActivity extends Activity implements SensorEventListener 
     private float[] matrixValues;
     private float[] mRotationMatrix;
     private float[] valuesRotation;
-    private Camera camera;
 
     private Double focalLength;
     private Double verticalViewAngle;
@@ -42,12 +38,6 @@ public class OrentationActivity extends Activity implements SensorEventListener 
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-
-        initCamera();
-        focalLength = getCameraParam(camera, CAMERA_FOCAL_LENGTH);
-        verticalViewAngle = getCameraParam(camera, CAMERA_VERTICAL_VIEW_ANGLE);
-        horizontalViewAngle = getCameraParam(camera, CAMERA_HORIZONTAL_VIEW_ANGLE);
-        releaseCamera();
 
         matrixValues = new float[3];
         mRotationMatrix = new float[16];
@@ -96,7 +86,7 @@ public class OrentationActivity extends Activity implements SensorEventListener 
 
         matrixValues[0] = (float) Math.toDegrees(matrixValues[0]);
 
-        readingAzimuth.setText(""+normalizeDataX(lowPass(matrixValues[0], lastX) + 22));
+        readingAzimuth.setText("" + normalizeDataX(lowPass(matrixValues[0], lastX) + 22));
 
         lastX = matrixValues[0];
     }
@@ -105,28 +95,11 @@ public class OrentationActivity extends Activity implements SensorEventListener 
         return last * (1.0f - a) + current * a;
     }
 
-    private float highPass(float current, float last, float filtered) {
-        return a * (filtered + current - last);
-    }
-
     private int normalizeDataX(float data) {
 
         if (data < 0) {
             data += 360;
         }
         return (int) data;
-    }
-
-    public Double getCameraParam(Camera camera, String nameParam) {
-        assert camera != null;
-        return Double.parseDouble(camera.getParameters().get(nameParam));
-    }
-
-    private void releaseCamera() {
-        camera.release();
-    }
-
-    private void initCamera() {
-        camera = Camera.open();
     }
 }
