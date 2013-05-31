@@ -3,9 +3,11 @@ package com.example.compass;
 import android.app.Activity;
 import android.hardware.*;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
-public class AndroidDetOrientationActivity extends Activity implements SensorEventListener {
+public class OrentationActivity extends Activity implements SensorEventListener {
 
     private static final String CAMERA_FOCAL_LENGTH = "focal-length";
     private static final String CAMERA_VERTICAL_VIEW_ANGLE = "vertical-view-angle";
@@ -28,19 +30,18 @@ public class AndroidDetOrientationActivity extends Activity implements SensorEve
     private Double horizontalViewAngle;
 
     private TextView readingAzimuth;
-    private Compass myCompass;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-        readingAzimuth = (TextView) findViewById(R.id.azimuth);
 
-        myCompass = (Compass) findViewById(R.id.mycompass);
+        readingAzimuth = (TextView) findViewById(R.id.azimutText);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-
 
         initCamera();
         focalLength = getCameraParam(camera, CAMERA_FOCAL_LENGTH);
@@ -80,7 +81,7 @@ public class AndroidDetOrientationActivity extends Activity implements SensorEve
             case Sensor.TYPE_ROTATION_VECTOR:
                 valuesRotation = event.values.clone();
                 count++;
-                if (count == 20) {
+                if (count == 17) {
                     update();
                     count = 0;
                 }
@@ -95,7 +96,7 @@ public class AndroidDetOrientationActivity extends Activity implements SensorEve
 
         matrixValues[0] = (float) Math.toDegrees(matrixValues[0]);
 
-        readingAzimuth.setText(" : " + normalizeDataX(lowPass(matrixValues[0], lastX)));
+        readingAzimuth.setText(""+normalizeDataX(lowPass(matrixValues[0], lastX) + 22));
 
         lastX = matrixValues[0];
     }

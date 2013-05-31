@@ -1,27 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical" >
-
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
-            android:id="@+id/azimuth"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-    <Button
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button"/>
-    <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button1"/>
-    <view
-            class="com.example.compass.Compass"
-            android:id="@+id/mycompass"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
-
-</LinearLayout>
+            android:text="azimut"
+            android:id="@+id/azimutText" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+</RelativeLayout>
