@@ -19,7 +19,7 @@ local.properties
 .classpath
 .project
 
-
+.idea
 *.ipr
 *.iws
 *.iml
